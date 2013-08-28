@@ -212,11 +212,12 @@ function GrepSearch(str)
 		\." && copy ".tmpFile." ".tmpFile2
 		\." && vim ".tmpFile2
 		\." && ".pythonCmd." ".tmpFile." ".tmpFile2." ".locationFile
-	"let qflist = getqflist()
-	"if len(qflist) >= 1
-		silent exec "split ".expand("<abuf>")
-		exec "cfile ".locationFile
-	"endif
+	silent exec "split ".expand("<abuf>")
+	silent exec "cfile ".locationFile
+	let qflist = getqflist()
+	if len(qflist) < 1
+		silent exec "q"
+	endif
 endfunction
 
 function GrepSearchCurrentWord()
@@ -229,6 +230,6 @@ endfunction
 map <C-S> :call GrepSearch( expand("<cword>") ) <CR>
 "map key ',' to be meaningless key
 map , : <CR>
-map <C-N> :lnext <CR> ,
-map <C-P> :lprevious <CR> ,
+map <C-N> :cnext <CR> ,
+map <C-P> :cprevious <CR> ,
 
